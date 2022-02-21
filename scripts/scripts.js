@@ -103,26 +103,34 @@ const questionData = {
   ],
 };
 
-// console.log(questionData.questions[0]);
 
 let counter = 0;
-
 let quizQuestion = document.getElementById("quiz-question");
 
+// question
 quizQuestion.innerHTML = questionData.questions[counter].question;
 
-//answers boxes
-let answer1 = document.getElementById("answer1");
-let answer2 = document.getElementById("answer2");
-let answer3 = document.getElementById("answer3");
-let answer4 = document.getElementById("answer4");
+// answers boxes
 
-answer1.innerHTML = questionData.questions[counter].content[0];
+questionData.questions[counter].content.forEach((option, index) => {
+    document.getElementById("answer"+index).innerHTML = option
+})
 
-answer2.innerHTML = questionData.questions[counter].content[1];
-
-answer3.innerHTML = questionData.questions[counter].content[2];
-
-answer4.innerHTML = questionData.questions[counter].content[3];
-
-console.log(quizQuestion);
+const answerHandler = (id) => {
+    console.log(id)
+    if (id === questionData.questions[counter].correct) {
+        counter++
+        quizQuestion.innerHTML = questionData.questions[counter].question;
+        answer1.innerHTML = questionData.questions[counter].content[0];
+        answer2.innerHTML = questionData.questions[counter].content[1];
+        answer3.innerHTML = questionData.questions[counter].content[2];
+        answer4.innerHTML = questionData.questions[counter].content[3];
+    } else {
+        counter = 0
+        quizQuestion.innerHTML = questionData.questions[counter].question;
+        answer1.innerHTML = questionData.questions[counter].content[0];
+        answer2.innerHTML = questionData.questions[counter].content[1];
+        answer3.innerHTML = questionData.questions[counter].content[2];
+        answer4.innerHTML = questionData.questions[counter].content[3];
+    }
+}
