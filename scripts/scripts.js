@@ -103,34 +103,59 @@ const questionData = {
   ],
 };
 
-
 let counter = 0;
 let quizQuestion = document.getElementById("quiz-question");
 
+const moneyTreeValues = [
+  "£100",
+  "£200",
+  "£300",
+  "£400",
+  "£500",
+  "£1000",
+  "£2000",
+];
+
+const moneyTree = document.getElementById("money-tree");
+
+const createMoneyTree = () => {
+  while (moneyTree.firstChild) {
+    moneyTree.removeChild(moneyTree.firstChild);
+  }
+  moneyTreeValues.forEach((value, index) => {
+    let li = document.createElement("li");
+    li.appendChild(document.createTextNode(value));
+    li.setAttribute("id", "money-tree" + index);
+    moneyTree.appendChild(li);
+  });
+};
+createMoneyTree();
+
 // question
-quizQuestion.innerHTML = questionData.questions[counter].question;
+const createQuestion = () => {
+  quizQuestion.innerHTML = questionData.questions[counter].question;
+};
+createQuestion();
 
 // answers boxes
-
-questionData.questions[counter].content.forEach((option, index) => {
-    document.getElementById("answer"+index).innerHTML = option
-})
+const createAnswers = () => {
+  questionData.questions[counter].content.forEach((option, index) => {
+    document.getElementById("answer" + index).innerHTML = option;
+  });
+};
+createAnswers();
 
 const answerHandler = (id) => {
-    console.log(id)
-    if (id === questionData.questions[counter].correct) {
-        counter++
-        quizQuestion.innerHTML = questionData.questions[counter].question;
-        answer1.innerHTML = questionData.questions[counter].content[0];
-        answer2.innerHTML = questionData.questions[counter].content[1];
-        answer3.innerHTML = questionData.questions[counter].content[2];
-        answer4.innerHTML = questionData.questions[counter].content[3];
-    } else {
-        counter = 0
-        quizQuestion.innerHTML = questionData.questions[counter].question;
-        answer1.innerHTML = questionData.questions[counter].content[0];
-        answer2.innerHTML = questionData.questions[counter].content[1];
-        answer3.innerHTML = questionData.questions[counter].content[2];
-        answer4.innerHTML = questionData.questions[counter].content[3];
-    }
-}
+  if (id === questionData.questions[counter].correct) {
+    counter++;
+    let element = "money-tree" + (counter - 1);
+    document.getElementById(element).style.color = "orange";
+    createQuestion();
+    createAnswers();
+  } else {
+    counter = 0;
+    createMoneyTree();
+    createQuestion();
+    createAnswers();
+  }
+};
